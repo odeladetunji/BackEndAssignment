@@ -1,2 +1,2 @@
 # betaService2
-microservices written in nodejs
+add_money and retrive_money service
