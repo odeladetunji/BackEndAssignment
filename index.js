@@ -43,7 +43,7 @@ app.use('/add_money', add_money);
 app.use('/remove_money', remove_money);
 
 server.listen(9000, function(){
-    console.log("Second Api is now Running");
+    console.log("BetaService2 microservice is now Running");
 });
 
 module.export = app;

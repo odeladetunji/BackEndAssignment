@@ -3,7 +3,7 @@ const router = express.Router();
 const mongo = require('mongodb');
 
 router.post('/', function(req, res){
-    let amountToWidthraw = req.body.amountToAdd;
+    let amountToWidthraw = req.body.amountToWidthraw;
     let lastRecord = null;
 
     let mongooseUrl = 'mongodb://127.0.0.1:27017/wallet';
