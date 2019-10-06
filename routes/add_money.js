@@ -6,22 +6,31 @@ const mongo = require('mongodb');
 router.post('/', function(req, res){
     let amountToAdd = req.body.amountToAdd;
     let lastRecord = null;
-
+    // console.log(amountToAdd);
     let mongooseUrl = 'mongodb://127.0.0.1:27017/wallet';
     mongo.connect(mongooseUrl, function(err, db){
         if(err) throw err;
-        lastRecord = db.collection('wallet').find({title: 'wallet'}).sort({_id: 1}).limit(1);
+        let newAmount = null;
+        lastRecord = db.collection('wallet').find({title: 'wallet'}).sort({_id: -1}).limit(1);
         lastRecord.forEach(function(doc, err){
             if(err) throw err;
-            console.log(doc);
-            let newAmount = amountToAdd + doc.amount;
-            db.wallet.update({title: 'wallet'},{$set:{'amount': newAmount}});
+            newAmount = parseInt(amountToAdd) + parseInt(doc.amount);
+            
+            let newTrantion = { 
+                title: 'wallet',
+                amount: newAmount,
+                type: 'Deposit'
+            }
+            console.log(newAmount)
+            db.collection('wallet').insert(newTrantion);
+            
+            db.close();
         });
-        
-        db.close();
     });
 
-    res.send('Money Added');
+    res.json({
+        'Amount Added': amountToAdd
+    })
 });
 
 module.exports = router;
