@@ -12,10 +12,10 @@ const mongo = require('mongodb');
 const add_money = require('./routes/add_money');
 const remove_money = require('./routes/remove_money');
 
-const whitelist = ['http://localhost:8025']
+const whitelist = ['http://localhost:8025', 'http://127.0.0.1:8025']
 const corsOptions = {    
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
@@ -23,19 +23,19 @@ const corsOptions = {
   }
 }
 
+
 //express settings
+app.use(cors(corsOptions));
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cors(corsOptions));
 
 // parse application/json
 app.use(bodyParser.json());
 app.use(cookieParser());
-//app.options(cors());
+app.options(cors(corsOptions));
 app.set('view engine', 'ejs');
-
 
 // mongoDB Schema and Connection;
 const basicSchema = {

@@ -16,14 +16,14 @@ router.post('/', function(req, res){
             if(err) throw err;
             newAmount = parseInt(amountToAdd) + parseInt(doc.amount);
             
-            let newTrantion = { 
+            let newTransaction = { 
                 title: 'wallet',
                 amount: newAmount,
                 type: 'Deposit'
             }
+
             console.log(newAmount)
-            db.collection('wallet').insert(newTrantion);
-            
+            db.collection('wallet').insert(newTransaction);
             db.close();
         });
     });
