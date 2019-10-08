@@ -5,8 +5,9 @@ const mongo = require('mongodb');
 
 router.post('/', function(req, res){
     let amountToAdd = req.body.amountToAdd;
+    console.log(req.body)//
+    console.log(amountToAdd)
     let lastRecord = null;
-    // console.log(amountToAdd);
     let mongooseUrl = 'mongodb://127.0.0.1:27017/wallet';
     mongo.connect(mongooseUrl, function(err, db){
         if(err) throw err;
@@ -21,16 +22,31 @@ router.post('/', function(req, res){
                 amount: newAmount,
                 type: 'Deposit'
             }
+            
+            console.log(newTransaction)
 
-            console.log(newAmount)
             db.collection('wallet').insert(newTransaction);
+
+            res.send({
+                'Amount Added': amountToAdd
+            });
+        
             db.close();
         });
     });
-
-    res.json({
-        'Amount Added': amountToAdd
-    })
 });
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+

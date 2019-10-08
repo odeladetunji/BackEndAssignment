@@ -6,7 +6,6 @@ const mongo = require('mongodb');
 router.post('/', function(req, res){
     let amountToWidthraw = req.body.amountToWidthraw;
     let lastRecord = null;
-    // console.log(amountToWidthraw);
     let mongooseUrl = 'mongodb://127.0.0.1:27017/wallet';
     mongo.connect(mongooseUrl, function(err, db){
         if(err) throw err;
@@ -14,9 +13,8 @@ router.post('/', function(req, res){
         lastRecord.forEach(function(doc, err){
             if(err) throw err;
             console.log(doc);
-            // console.log(parseInt(amountToWidthraw))
             let newAmount = parseInt(doc.amount) - parseInt(amountToWidthraw);
-            // console.log(newAmount);
+            
             if(parseInt(doc.amount) > parseInt(amountToWidthraw)
                 || parseInt(doc.amount) == parseInt(amountToWidthraw)){
                     let newTrantion = { 
